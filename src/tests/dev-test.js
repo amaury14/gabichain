@@ -19,7 +19,8 @@ const w1 = new GWallet();
 const w2 = new GWallet();
 
 const tx = GTransaction.newTransaction(w1, w2.publicKey, 100000);
-tx.update(w1, w2.publicKey, 2000000);
-tx.update(w1, w2.publicKey, 3000000);
+tx.update(w1, w2.publicKey, 200000);
+tx.update(w1, w2.publicKey, 300000);
+
 console.log('🚀 ~ tx', tx);
 console.log('Verification of transaction is: ', GTransaction.verifyTransaction(tx));
