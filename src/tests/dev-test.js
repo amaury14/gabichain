@@ -1,16 +1,7 @@
-const GBlock = require('../lib/blockchain/block');
+const GBlockChain = require("../lib/blockchain");
 
-// const block = new GBlock('16-10-2021', '0'.repeat(64), '0'.repeat(64), 'Example Data');
+const bc = new GBlockChain();
 
-// console.log(block.toString());
-// console.log(GBlock.genesis().toString());
-
-// for (let i = 1; i <= 50; i++) {
-//     block1 = new GBlock(Date.now(), '0'.repeat(64), '0'.repeat(64), `Data ${i}`);
-//     console.log(block1.toString());
-// }
-
-// const fooBlock = GBlock.mineGBlock(GBlock.genesis(), 'foobar');
-// console.log(GBlock.genesis().toString());
-// console.log(fooBlock.toString());
-
+for (let i = 1; i <= 10; i++) {
+  console.log(bc.addBlock(`Block ${i}`).toString());
+}
