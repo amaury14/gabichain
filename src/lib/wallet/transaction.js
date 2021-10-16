@@ -7,27 +7,42 @@ class GTransaction {
         this.outputs = [];
     }
 
-    static newTransaction(sender, recipient, amount) {
+    update(senderWallet, recipientAddress, amount) {
+        const senderOutput = this.outputs.find(output => output.address === senderWallet.publicKey);
+        if (amount > senderOutput.amount) {
+            console.log(`Amount ${amount} exceeds balance`);
+            return;
+        }
+        senderOutput.amount = senderOutput.amount - amount;
+        this.outputs.push({ amount, address: recipientAddress});
+        GTransaction.signTransaction(this, senderWallet);
+    }
+
+    static newTransaction(senderWallet, recipientAddress, amount) {
         const transaction = new this();
-        if (amount > sender.balance) {
+        if (amount > senderWallet.balance) {
             console.log(`Amount ${amount} exceeds balance`);
             return;
         }
         transaction.outputs.push(...[
-            { amount: sender.balance - amount, adress: sender.publicKey },
-            { amount, adress: recipient }
+            { amount: senderWallet.balance - amount, address: senderWallet.publicKey },
+            { amount, address: recipientAddress }
         ]);
-        this.signTransaction(transaction, sender);
+        GTransaction.signTransaction(transaction, senderWallet);
         return transaction;
     }
 
-    static signTransaction(transaction, sender) {
+    static signTransaction(transaction, senderWallet) {
         transaction.input = {
             timestamp: Date.now(),
-            amount: sender.balance,
-            address: sender.publicKey,
-            signature: sender.sign(GChainUtil.hash(this.outputs))
+            amount: senderWallet.balance,
+            address: senderWallet.publicKey,
+            signature: senderWallet.sign(GChainUtil.hash(transaction.outputs))
         };
+    }
+
+    static verifyTransaction(transaction) {
+        return GChainUtil.verifySignature(transaction.input.address, transaction.input.signature, GChainUtil.hash(transaction.outputs));
     }
 }
 
