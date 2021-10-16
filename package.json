@@ -1,0 +1,19 @@
+{
+  "name": "gabichain",
+  "version": "1.0.0",
+  "description": "Lite Blockchain based on Node and Javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watchAll",
+    "dev-test": "nodemon src/tests/dev-test.js"
+  },
+  "author": "Amaury Chong Rodríguez",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  },
+  "dependencies": {
+    "crypto-js": "^4.1.1",
+    "jest": "^27.2.5"
+  }
+}
