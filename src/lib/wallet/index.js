@@ -1,5 +1,6 @@
 const { INITIAL_BALANCE, GTOKEN } = require('../config');
 const GChainUtil = require('../utils/chain');
+const GTransaction = require('./transaction');
 
 class GWallet {
     constructor() {
@@ -16,6 +17,21 @@ class GWallet {
 
     sign(datahash) {
         return this.keyPair.sign(datahash);
+    }
+
+    createTransaction(recipient, amount, transactionPool) {
+        if (amount > this.balance) {
+            console.log(`Amount ${amount} exceeds balance ${this.balance}`);
+            return;
+        }
+        let transaction = transactionPool.existingTransaction(this.publicKey);
+        if (transaction) {
+            transaction.update(this, recipient, amount);
+        } else {
+            transaction = GTransaction.newTransaction(this, recipient, amount);
+            transactionPool.updateOrAddTransaction(transaction);
+        }
+        return transaction;
     }
 }
 

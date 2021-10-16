@@ -12,6 +12,10 @@ class GTransactionPool {
             this.transactions.push(transaction);
         }
     }
+
+    existingTransaction(address) {
+        return this.transactions.find(item => item.indexOf.address === address);
+    }
 }
 
 module.exports = GTransactionPool;
