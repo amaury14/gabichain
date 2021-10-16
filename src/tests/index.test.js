@@ -1,5 +1,5 @@
 const GBlockChain = require('../lib/blockchain');
-const GBlock = require('../lib/block');
+const GBlock = require('../lib/blockchain/block');
 
 describe('GBlockChain', () => {
     let bc, bc2;
