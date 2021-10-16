@@ -16,6 +16,7 @@ class GTransaction {
         senderOutput.amount = senderOutput.amount - amount;
         this.outputs.push({ amount, address: recipientAddress});
         GTransaction.signTransaction(this, senderWallet);
+        return senderOutput;
     }
 
     static newTransaction(senderWallet, recipientAddress, amount) {
