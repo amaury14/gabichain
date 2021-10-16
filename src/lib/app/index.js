@@ -2,8 +2,9 @@
  const bodyParser = require('body-parser');
  const GBlockChain = require('../blockchain');
  const GP2PServer = require('./p2pServer');
+const { GHTTP_PORT } = require('../config');
  
- const HTTP_PORT = process.env.HTTP_PORT || 3000;
+ const HTTP_PORT = process.env.HTTP_PORT || GHTTP_PORT;
  const app = express();
  const bc = new GBlockChain();
  const p2pServer = new GP2PServer(bc);

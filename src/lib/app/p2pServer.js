@@ -1,8 +1,9 @@
 const webSocket = require("ws");
 const GBlockChain = require("../blockchain");
+const { gpeers, GP2P_PORT } = require('../config');
 
-const peers = process.env.PEERS ? process.env.PEERS.split(",") : [];
-const P2P_PORT = process.env.P2P_PORT || 5001;
+const peers = process.env.PEERS ? process.env.PEERS.split(",") : gpeers;
+const P2P_PORT = process.env.P2P_PORT || GP2P_PORT;
 
 class GP2PServer {
   constructor(blockchain) {

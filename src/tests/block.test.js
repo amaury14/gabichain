@@ -1,4 +1,5 @@
 const GBlock = require("../lib/blockchain/block");
+const { GDIFFICULTY } = require('../lib/config');
 
 describe("GBlock", () => {
   let data, lastBlock, block;
@@ -14,5 +15,9 @@ describe("GBlock", () => {
 
   it("Set the lastHash to match the hash of the last block", () => {
     expect(block.lastHash).toEqual(lastBlock.hash);
+  });
+
+  it("Generate the hash to match the difficulty", () => {
+    expect(block.hash.substring(0, GDIFFICULTY)).toEqual('0'.repeat(GDIFFICULTY));
   });
 });
