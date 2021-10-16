@@ -29,6 +29,19 @@ class GBlockChain {
         }
         return true;
     }
+
+    replaceChain(newChain) {
+        if (newChain.length <= this.gchain.length) {
+            // Received chain is not longer than current chain.
+            return;
+        } else if (!this.isValidChain(newChain)) {
+            // Received chain is not valid.
+            return;
+        }
+        // Replacing chain with received...
+        this.gchain = newChain;
+        // Replaced successfully.
+    }
 }
 
 module.exports = GBlockChain;
