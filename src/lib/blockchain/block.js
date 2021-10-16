@@ -1,4 +1,4 @@
-const SHA256 = require('crypto-js/sha256');
+const GChainUtil = require('../utils/chain');
 const { GDIFFICULTY, MINE_RATE } = require('../config');
 
 class GBlock {
@@ -45,7 +45,7 @@ class GBlock {
     }
 
     static hash(timestamp, lastHash, data, nonce, difficulty) {
-        return SHA256(`${timestamp}${lastHash}${data}${nonce}${difficulty}`).toString();
+        return GChainUtil.hash(`${timestamp}${lastHash}${data}${nonce}${difficulty}`).toString();
     }
 
     static blockHash(block) {

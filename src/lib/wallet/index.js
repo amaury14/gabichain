@@ -13,6 +13,10 @@ class GWallet {
         \n- Public Key: ${this.publicKey} 
         \n- Balance: ${this.balance} ${GTOKEN}`;
     }
+
+    sign(datahash) {
+        return this.keyPair.sign(datahash);
+    }
 }
 
 module.exports = GWallet;
