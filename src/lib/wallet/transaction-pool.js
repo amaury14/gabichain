@@ -33,6 +33,10 @@ class GTransactionPool {
             }
         })
     }
+
+    clear() {
+        this.transactions = [];
+    }
 }
 
 module.exports = GTransactionPool;

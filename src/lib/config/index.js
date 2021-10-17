@@ -9,6 +9,7 @@ const GTOKEN = "GABI";
 const GMESSAGE_TYPE = {
   chain: "CHAIN",
   transaction: "TRANSACTION",
+  clear_transactions: "CLEAR_TRANSACTIONS"
 };
 const GMINING_REWARD = 50;
 

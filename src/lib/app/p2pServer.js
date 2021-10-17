@@ -46,6 +46,9 @@ class GP2PServer {
         case GMESSAGE_TYPE.transaction:
           this.transactionPool.updateOrAddTransaction(data.payload);
           break;
+        case GMESSAGE_TYPE.clear_transactions:
+          this.transactionPool.clear();
+          break;
       }
     });
   }
@@ -54,7 +57,7 @@ class GP2PServer {
     socket.send(
       JSON.stringify({
         type: GMESSAGE_TYPE.chain,
-        payload: this.blockchain.gchain,
+        payload: this.blockchain.gchain
       })
     );
   }
@@ -63,7 +66,7 @@ class GP2PServer {
     socket.send(
       JSON.stringify({
         type: GMESSAGE_TYPE.transaction,
-        payload: transaction,
+        payload: transaction
       })
     );
   }
@@ -77,6 +80,17 @@ class GP2PServer {
   syncTransactions(transaction) {
     this.sockets.forEach((socket) => {
       this.sendTransaction(socket, transaction);
+    });
+  }
+
+  broadcastClearTransactions() {
+    this.sockets.forEach((socket) => {
+      socket.send(
+        JSON.stringify({
+          type: GMESSAGE_TYPE.clear_transactions,
+          payload: true
+        })
+      );
     });
   }
 }
