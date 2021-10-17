@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 
 // Variables
 const wallet = new GWallet();
+const wallets = [];
 const tp = new GTransactionPool();
 const bc = new GBlockChain();
 const p2pServer = new GP2PServer(bc, tp);
@@ -40,6 +41,39 @@ app.post("/transact", (req, res) => {
   const transaction = wallet.createTransaction(recipient, amount, bc, tp);
   p2pServer.syncTransactions(transaction);
   res.redirect("/transactions");
+});
+
+app.post("/address-transact", (req, res) => {
+  const { sender, recipient, amount } = req.body;
+  const w1 = wallets.find((item) => item.publicKey === sender);
+  const transaction = wallet.createTransactionForWallet(
+    w1,
+    recipient,
+    amount,
+    bc,
+    tp
+  );
+  p2pServer.syncTransactions(transaction);
+  res.redirect("/transactions");
+});
+
+app.get("/add-wallet", (req, res) => {
+  const w = new GWallet();
+  wallets.push(w);
+  res.json({
+    balance: w.balance,
+    publicKey: w.publicKey,
+  });
+});
+
+app.get("/get-wallets", (req, res) => {
+  const warray = wallets.map((item) => {
+    return {
+      balance: item.balance,
+      publicKey: item.publicKey,
+    };
+  });
+  res.json(warray);
 });
 
 app.get("/public-key", (req, res) => {
