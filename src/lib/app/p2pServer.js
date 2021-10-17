@@ -1,13 +1,14 @@
 const webSocket = require("ws");
 const GBlockChain = require("../blockchain");
-const { gpeers, GP2P_PORT } = require('../config');
+const { gpeers, GP2P_PORT, GMESSAGE_TYPE } = require("../config");
 
 const peers = process.env.PEERS ? process.env.PEERS.split(",") : gpeers;
 const P2P_PORT = process.env.P2P_PORT || GP2P_PORT;
 
 class GP2PServer {
-  constructor(blockchain) {
+  constructor(blockchain, transactionPool) {
     this.blockchain = blockchain;
+    this.transactionPool = transactionPool;
     this.sockets = [];
   }
 
@@ -36,21 +37,47 @@ class GP2PServer {
   }
 
   messageHandler(socket) {
-      socket.on('message', message => {
-        const data = JSON.parse(message);
-        this.blockchain.replaceChain(data);
-        console.log('🚀 ~ data', data);
-      });
+    socket.on("message", (message) => {
+      const data = JSON.parse(message);
+      switch (data.type) {
+        case GMESSAGE_TYPE.chain:
+          this.blockchain.replaceChain(data.payload);
+          break;
+        case GMESSAGE_TYPE.transaction:
+          this.transactionPool.updateOrAddTransaction(data.payload);
+          break;
+      }
+    });
   }
 
   sendChain(socket) {
-    socket.send(JSON.stringify(this.blockchain.gchain));
+    socket.send(
+      JSON.stringify({
+        type: GMESSAGE_TYPE.chain,
+        payload: this.blockchain.gchain,
+      })
+    );
+  }
+
+  sendTransaction(socket, transaction) {
+    socket.send(
+      JSON.stringify({
+        type: GMESSAGE_TYPE.transaction,
+        payload: transaction,
+      })
+    );
   }
 
   syncChains() {
-      this.sockets.forEach(socket => {
-        this.sendChain(socket);
-      });
+    this.sockets.forEach((socket) => {
+      this.sendChain(socket);
+    });
+  }
+
+  syncTransactions(transaction) {
+    this.sockets.forEach((socket) => {
+      this.sendTransaction(socket, transaction);
+    });
   }
 }
 

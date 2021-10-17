@@ -1,5 +1,5 @@
 const GChainUtil = require('../utils/chain');
-const { GDIFFICULTY, MINE_RATE } = require('../config');
+const { GDIFFICULTY, GMINE_RATE } = require('../config');
 
 class GBlock {
     constructor(timestamp, lastHash, hash, data, nonce, difficulty, processTime) {
@@ -55,7 +55,7 @@ class GBlock {
 
     static adjustDifficulty(lastBlock, currentTime) {
         let { difficulty } = lastBlock;
-        difficulty = lastBlock.timestamp + MINE_RATE > currentTime ? difficulty + 1 : difficulty - 1;
+        difficulty = lastBlock.timestamp + GMINE_RATE > currentTime ? difficulty + 1 : difficulty - 1;
         return difficulty;
     }
 }

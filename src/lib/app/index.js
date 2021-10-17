@@ -12,7 +12,7 @@ const GTransactionPool = require("../wallet/transaction-pool");
 const wallet = new GWallet();
 const tp = new GTransactionPool();
 const bc = new GBlockChain();
-const p2pServer = new GP2PServer(bc);
+const p2pServer = new GP2PServer(bc, tp);
 app.use(bodyParser.json());
 
 app.get("/blocks", (req, res) => {
@@ -33,6 +33,7 @@ app.get("/transactions", (req, res) => {
 app.post("/transact", (req, res) => {
     const { recipient, amount } = req.body;
     const transaction = wallet.createTransaction(recipient, amount, tp);
+    p2pServer.syncTransactions(transaction);
     res.redirect("/transactions");
   });
 

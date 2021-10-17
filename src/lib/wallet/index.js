@@ -1,10 +1,10 @@
-const { INITIAL_BALANCE, GTOKEN } = require('../config');
+const { GINITIAL_BALANCE, GTOKEN } = require('../config');
 const GChainUtil = require('../utils/chain');
 const GTransaction = require('./transaction');
 
 class GWallet {
     constructor() {
-        this.balance = INITIAL_BALANCE;
+        this.balance = GINITIAL_BALANCE;
         this.keyPair = GChainUtil.getKeyPair();
         this.publicKey = this.keyPair.getPublic().encode('hex');
     }
