@@ -14,7 +14,7 @@ class GTransactionPool {
     }
 
     existingTransaction(address) {
-        return this.transactions.find(item => item.indexOf.address === address);
+        return this.transactions.find(item => item.input.address === address);
     }
 }
 
