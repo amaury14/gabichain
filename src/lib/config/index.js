@@ -12,6 +12,7 @@ const GMESSAGE_TYPE = {
   clear_transactions: "CLEAR_TRANSACTIONS"
 };
 const GMINING_REWARD = 50;
+const GBLOCKCHAIN_WALLET = "GWallet-0";
 
 module.exports = {
   GDIFFICULTY,
@@ -22,5 +23,6 @@ module.exports = {
   GINITIAL_BALANCE,
   GTOKEN,
   GMESSAGE_TYPE,
-  GMINING_REWARD
+  GMINING_REWARD,
+  GBLOCKCHAIN_WALLET
 };

@@ -31,6 +31,7 @@ class GTransactionPool {
                 console.log(`Invalid signature from ${item.input.address}`);
                 return;
             }
+            return item;
         })
     }
 

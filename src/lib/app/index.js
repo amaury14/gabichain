@@ -2,19 +2,24 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const GBlockChain = require("../blockchain");
 const GP2PServer = require("./p2pServer");
-const { GHTTP_PORT } = require("../config");
-
-const HTTP_PORT = process.env.HTTP_PORT || GHTTP_PORT;
-const app = express();
+const GMiner = require("./miner");
 const GWallet = require("../wallet");
 const GTransactionPool = require("../wallet/transaction-pool");
+const { GHTTP_PORT } = require("../config");
+const HTTP_PORT = process.env.HTTP_PORT || GHTTP_PORT;
 
+// App
+const app = express();
+app.use(bodyParser.json());
+
+// Variables
 const wallet = new GWallet();
 const tp = new GTransactionPool();
 const bc = new GBlockChain();
 const p2pServer = new GP2PServer(bc, tp);
-app.use(bodyParser.json());
+const miner = new GMiner(bc, tp, wallet, p2pServer);
 
+// Endpoints
 app.get("/blocks", (req, res) => {
   res.json(bc.gchain);
 });
@@ -39,6 +44,12 @@ app.post("/transact", (req, res) => {
 
 app.get("/public-key", (req, res) => {
   res.json({ publicKey: wallet.publicKey });
+});
+
+app.post("/mine-transactions", (req, res) => {
+  const block = miner.mine();
+  console.log(`New block added: ${block.toString()}`);
+  res.redirect("/blocks");
 });
 
 app.listen(HTTP_PORT, () => {

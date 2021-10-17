@@ -24,7 +24,7 @@ class GBlock {
     }
 
     static genesis() {
-        return new this('Genesis Time', '0'.repeat(64), '0'.repeat(64), [], 0, 0);
+        return new this(`Genesis Time: ${Date.now()}`, '0'.repeat(64), '0'.repeat(64), [], 0, 0);
     }
 
     static mineGBlock(lastBlock, data) {

@@ -1,4 +1,4 @@
-const { GINITIAL_BALANCE, GTOKEN } = require('../config');
+const { GINITIAL_BALANCE, GTOKEN, GBLOCKCHAIN_WALLET } = require('../config');
 const GChainUtil = require('../utils/chain');
 const GTransaction = require('./transaction');
 
@@ -36,7 +36,8 @@ class GWallet {
 
     static blockchainWallet() {
         const blockchainWallet = new this();
-        blockchainWallet.publicKey = 'Coinbase-00000';
+        // Here we have issues
+        blockchainWallet.address = GBLOCKCHAIN_WALLET;
         return blockchainWallet;
     }
 }
