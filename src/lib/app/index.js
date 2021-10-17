@@ -37,23 +37,21 @@ app.get("/transactions", (req, res) => {
 });
 
 app.post("/transact", (req, res) => {
-  const { recipient, amount } = req.body;
+  const { recipient, amount, fee } = req.body;
   const transaction = wallet.createTransaction(recipient, amount, bc, tp);
+  const transaction2 = wallet.createTransaction(miner.blockchainWallet.publicKey, fee, bc, tp);
   p2pServer.syncTransactions(transaction);
+  p2pServer.syncTransactions(transaction2);
   res.redirect("/transactions");
 });
 
 app.post("/address-transact", (req, res) => {
-  const { sender, recipient, amount } = req.body;
+  const { sender, recipient, amount, fee } = req.body;
   const w1 = wallets.find((item) => item.publicKey === sender);
-  const transaction = wallet.createTransactionForWallet(
-    w1,
-    recipient,
-    amount,
-    bc,
-    tp
-  );
+  const transaction = wallet.createTransactionForWallet(w1, recipient, amount, bc, tp);
+  const transaction2 = wallet.createTransactionForWallet(w1, miner.blockchainWallet.publicKey, fee, bc, tp);
   p2pServer.syncTransactions(transaction);
+  p2pServer.syncTransactions(transaction2);
   res.redirect("/transactions");
 });
 

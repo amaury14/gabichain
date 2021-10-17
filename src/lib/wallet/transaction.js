@@ -38,7 +38,7 @@ class GTransaction {
         ]);
     }
 
-    static rerwardTransaction(minerWallet, senderWallet) {
+    static rewardTransaction(minerWallet, senderWallet) {
         return GTransaction.transactionWithOutputs(senderWallet, [
             { amount: GMINING_REWARD, address: minerWallet.publicKey }
         ]);

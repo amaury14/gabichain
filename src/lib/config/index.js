@@ -5,6 +5,7 @@ const GP2P_PORT = 5001;
 const GMINE_RATE = 3000; // milliseconds
 
 const GINITIAL_BALANCE = 1000;
+const GPOOL_BALANCE = 1000000;
 const GTOKEN = "GABI";
 const GMESSAGE_TYPE = {
   chain: "CHAIN",
@@ -24,5 +25,6 @@ module.exports = {
   GTOKEN,
   GMESSAGE_TYPE,
   GMINING_REWARD,
-  GBLOCKCHAIN_WALLET
+  GBLOCKCHAIN_WALLET,
+  GPOOL_BALANCE
 };

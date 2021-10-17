@@ -37,6 +37,7 @@ class GWallet {
 
     createTransactionForWallet(senderWallet, recipient, amount, blockchain, transactionPool) {
         const balance = this.calculateBalance(blockchain, senderWallet.publicKey);
+        senderWallet.balance = balance;
         if (amount > balance) {
             console.log(`Amount ${amount} exceeds balance ${balance}`);
             return;
@@ -49,13 +50,6 @@ class GWallet {
             transactionPool.updateOrAddTransaction(transaction);
         }
         return transaction;
-    }
-
-    static blockchainWallet() {
-        const blockchainWallet = new this();
-        // Here we have issues
-        blockchainWallet.address = GBLOCKCHAIN_WALLET;
-        return blockchainWallet;
     }
 
     calculateBalance(blockchain, address) {
