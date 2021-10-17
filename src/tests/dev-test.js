@@ -25,7 +25,6 @@
 // const GWallet = require("../lib/wallet");
 // const GTransactionPool = require("../lib/wallet/transaction-pool");
 // const GTransaction = require("../lib/wallet/transaction");
-
 // const w1 = new GWallet();
 // const tp = new GTransactionPool();
 // const tx = GTransaction.newTransaction(w1, '0000', 30);
@@ -35,3 +34,20 @@
 // tp.updateOrAddTransaction(newTx);
 // console.log(tp.transactions.find(item => item.id === newTx.id) === newTx);
 // console.log(tp.transactions.length);
+
+// Verify transaction pool valid transactions
+// const GWallet = require("../lib/wallet");
+// const GTransactionPool = require("../lib/wallet/transaction-pool");
+// const w1 = new GWallet();
+// const w2 = new GWallet();
+// const w3 = new GWallet();
+// const tp = new GTransactionPool();
+// const tx1 = w1.createTransaction('aaaaaaa', 100, tp);
+// const tx2 = w2.createTransaction('bbbbbbb', 200, tp);
+// const tx3 = w3.createTransaction('ccccccc', 300, tp);
+// tx2.input.signature = w2.sign('05'.repeat(32));
+// tx1.input.amount = 1000;
+// console.log('🚀 ~ tx1', tx1.outputs);
+// console.log('🚀 ~ tx2', tx2.outputs);
+// console.log('🚀 ~ tx3', tx3.outputs);
+// console.log(tp.validTransactions());
