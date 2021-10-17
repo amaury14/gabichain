@@ -31,11 +31,15 @@ app.get("/transactions", (req, res) => {
 });
 
 app.post("/transact", (req, res) => {
-    const { recipient, amount } = req.body;
-    const transaction = wallet.createTransaction(recipient, amount, tp);
-    p2pServer.syncTransactions(transaction);
-    res.redirect("/transactions");
-  });
+  const { recipient, amount } = req.body;
+  const transaction = wallet.createTransaction(recipient, amount, tp);
+  p2pServer.syncTransactions(transaction);
+  res.redirect("/transactions");
+});
+
+app.get("/public-key", (req, res) => {
+  res.json({ publicKey: wallet.publicKey });
+});
 
 app.listen(HTTP_PORT, () => {
   console.log("GBlockChain listening on port: ", HTTP_PORT);
