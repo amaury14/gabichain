@@ -1,4 +1,5 @@
 const GChainUtil = require('../utils/chain');
+const { GMINING_REWARD } = require('../config');
 
 class GTransaction {
     constructor() {
@@ -19,18 +20,28 @@ class GTransaction {
         return senderOutput;
     }
 
-    static newTransaction(senderWallet, recipientAddress, amount) {
+    static transactionWithOutputs(senderWallet, outputs) {
         const transaction = new this();
+        transaction.outputs.push(...outputs);
+        GTransaction.signTransaction(transaction, senderWallet);
+        return transaction;
+    }
+
+    static newTransaction(senderWallet, recipientAddress, amount) {
         if (amount > senderWallet.balance) {
             console.log(`Amount ${amount} exceeds balance`);
             return;
         }
-        transaction.outputs.push(...[
+        return GTransaction.transactionWithOutputs(senderWallet, [
             { amount: senderWallet.balance - amount, address: senderWallet.publicKey },
             { amount, address: recipientAddress }
         ]);
-        GTransaction.signTransaction(transaction, senderWallet);
-        return transaction;
+    }
+
+    static rerwardTransaction(minerWallet, senderWallet) {
+        return GTransaction.transactionWithOutputs(senderWallet, [
+            { amount: GMINING_REWARD, address: minerWallet.publicKey }
+        ]);
     }
 
     static signTransaction(transaction, senderWallet) {

@@ -10,6 +10,7 @@ const GMESSAGE_TYPE = {
   chain: "CHAIN",
   transaction: "TRANSACTION",
 };
+const GMINING_REWARD = 50;
 
 module.exports = {
   GDIFFICULTY,
@@ -19,5 +20,6 @@ module.exports = {
   GMINE_RATE,
   GINITIAL_BALANCE,
   GTOKEN,
-  GMESSAGE_TYPE
+  GMESSAGE_TYPE,
+  GMINING_REWARD
 };

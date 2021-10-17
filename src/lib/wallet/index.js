@@ -33,6 +33,12 @@ class GWallet {
         }
         return transaction;
     }
+
+    static blockchainWallet() {
+        const blockchainWallet = new this();
+        blockchainWallet.publicKey = 'Coinbase-00000';
+        return blockchainWallet;
+    }
 }
 
 module.exports = GWallet;

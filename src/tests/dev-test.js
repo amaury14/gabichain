@@ -51,3 +51,13 @@
 // console.log('🚀 ~ tx2', tx2.outputs);
 // console.log('🚀 ~ tx3', tx3.outputs);
 // console.log(tp.validTransactions());
+
+// Mining reward test
+// const GWallet = require("../lib/wallet");
+// const GTransaction = require("../lib/wallet/transaction");
+// const w1 = new GWallet();
+// const tx1 = GTransaction.rerwardTransaction(w1, GWallet.blockchainWallet());
+// console.log(
+//   "🚀 ~ tx1",
+//   tx1.outputs.find((item) => item.address === w1.publicKey).amount
+// );
