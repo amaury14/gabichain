@@ -37,7 +37,7 @@ app.get("/transactions", (req, res) => {
 
 app.post("/transact", (req, res) => {
   const { recipient, amount } = req.body;
-  const transaction = wallet.createTransaction(recipient, amount, tp);
+  const transaction = wallet.createTransaction(recipient, amount, bc, tp);
   p2pServer.syncTransactions(transaction);
   res.redirect("/transactions");
 });
@@ -50,6 +50,15 @@ app.post("/mine-transactions", (req, res) => {
   const block = miner.mine();
   console.log(`New block added: ${block.toString()}`);
   res.redirect("/blocks");
+});
+
+app.get("/balance", (req, res) => {
+  res.json(wallet.calculateBalance(bc, wallet.publicKey));
+});
+
+app.post("/address-balance", (req, res) => {
+  const { address } = req.body;
+  res.json(wallet.calculateBalance(bc, address));
 });
 
 app.listen(HTTP_PORT, () => {

@@ -4,7 +4,7 @@ const gpeers = [];
 const GP2P_PORT = 5001;
 const GMINE_RATE = 3000; // milliseconds
 
-const GINITIAL_BALANCE = 1000000;
+const GINITIAL_BALANCE = 1000;
 const GTOKEN = "GABI";
 const GMESSAGE_TYPE = {
   chain: "CHAIN",
