@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require('cors');
 const GBlockChain = require("../blockchain");
 const GP2PServer = require("./p2pServer");
 const GMiner = require("./miner");
@@ -11,6 +12,7 @@ const HTTP_PORT = process.env.HTTP_PORT || GHTTP_PORT;
 // App
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 
 // Variables
 const wallet = new GWallet();
@@ -52,7 +54,8 @@ app.post("/address-transact", (req, res) => {
   const transaction2 = wallet.createTransactionForWallet(w1, miner.blockchainWallet.publicKey, fee, bc, tp);
   p2pServer.syncTransactions(transaction);
   p2pServer.syncTransactions(transaction2);
-  res.redirect("/transactions");
+  const block = miner.mine();
+  res.json(tp.transactions);
 });
 
 app.get("/add-wallet", (req, res) => {
